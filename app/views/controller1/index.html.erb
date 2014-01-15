@@ -1,0 +1,73 @@
+<h1>Search Movies</h1>
+<br />
+
+<% if false %>
+<%=form_tag(:method => 'get') do %>
+  <%= text_field_tag :search, params[:search]%>
+<%= submit_tag "Search", :name => nil  %>
+ <% end %>
+<% end %>
+
+<form method="get" action="/controller1/index">
+  <input type="text" name="title" value="<%= @search_text %>"/>
+<input type="submit" name="search" value="Search" />
+</form>
+<br />
+
+<style>
+table {
+  border-collapse:collapse;
+}
+table,th, td
+{
+  border: 1px solid black;
+  text-align: center;
+}
+th
+{
+  font-weight:bold;
+  font-size:18px;
+}
+td.centre
+{
+  font-size:32px;
+}
+input
+{
+  font-size: 24px;
+}
+</style>
+
+<table>
+
+  <col style="width:5%">
+  <col style="width:10%">
+  <col style="width:45%">
+  <col style="width:5%;">
+  <col style="width:5%">
+  <col style="width:5%">
+  <col style="width:25%">
+
+  <% if @searching == false %>
+    <p>Showing US Box Office</p>
+  <% end %>
+
+  <tr>
+    <th>Poster</th><th>Title</th><th>Synopsis</th><th>MPAA Rating</th><th>Runtime</th><th>Critics' Score</th><th>Critics' Consensus</th>
+  </tr>
+
+
+
+  <% @movie_data.each do |movie| %>
+    <tr>
+    <td><img src="<%=movie["posters"]["profile"]%>" > </td>
+    <td><b><%= movie["title"] %></b></td>
+    <td><%= movie["synopsis"]  %></td>
+    <td class="centre"><%= movie["mpaa_rating"] %></td>
+    <td class="centre"><%= movie["runtime"] %></td>
+    <td class="centre"><%= if movie["ratings"]["critics_score"].to_i >= 0; movie["ratings"]["critics_score"].to_s  + "%"; else "N/A"; end %></td>
+    <td><%= movie["critics_consensus"] %></td>
+  </tr>
+<% end %>
+
+</table>
